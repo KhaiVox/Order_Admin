@@ -1,0 +1,93 @@
+<div class='container-left'>
+    {{> sidebar }}
+</div>
+<div class='container-right'>
+    <div class='form-wrap'>
+        {{! Header }}
+        <div class='form-header'>
+            <a class="form-header-title" href="/orders">Danh Sách Đơn Đặt ({{quantity}})</a>
+            
+            <div class='form-btn'>
+                <div class='btn btn-show-detail' onclick='showDetail()'>
+                    Hiển thị đơn hàng cần xử lý
+                </div>
+                <a href="/home" class='btn btn-add-order'>
+                    <span class='btn-icon-add'><ion-icon name='add-outline'></ion-icon></span>
+                    Tạo đơn
+                </a>
+            </div>
+        </div>
+
+        {{! Order Overview }}
+        <div class='order-overview hidden'>
+            <div class='overview-header'>
+                <div class='overview-header-title'>Đơn Hàng Cần Xử Lý</div>
+                <div class='btn btn-hide-detail' onclick='hideDetail()'>Ẩn đơn hàng cần xử lý</div>
+            </div>
+            <ul class='overview-body'>
+                <li class='overview-item'>
+                    <a href="/orders">
+                        <div class='overview-title'>Tổng đơn hàng</div>
+                        <div class='overview-des'>({{quantity}})</div>
+                    </a>
+                </li>
+                <li class='overview-item'>
+                    <a href="/orders/await">
+                        <div class='overview-title'>Chưa duyệt</div>
+                        <div class='overview-des overview-des--false'>({{countAwait}})</div>
+                    </a>
+                </li>
+                <li class='overview-item'>
+                    <a href="/orders/done">
+                        <div class='overview-title'>Đã duyệt</div>
+                        <div class='overview-des overview-des--true'>({{countDone}})</div>
+                    </a>
+                </li>
+                <li class='overview-item'>
+                    <a href="/orders/ready">
+                        <div class='overview-title'>Đang chuẩn bị</div>
+                        <div class='overview-des overview-des--backup'>({{countReady}})</div>
+                    </a>
+                </li>
+                <li class='overview-item'>
+                    <a href="/orders/delivery">
+                        <div class='overview-title'>Đang giao hàng</div>
+                        <div class='overview-des overview-des--transfer'>({{countDelivery}})</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        {{! List Order }}
+        <div class='form-detail form-detail--order'>
+            <table id='table-public' class='table ' style='width:100%'>
+                <thead>
+                    <tr>
+                        <th class="list-item-heading--table">STT</th>
+                        <th class="list-item-heading--table">Thời gian đặt</th>
+                        <th class="list-item-heading--table">Tổng tiền</th>
+                        <th class="list-item-heading--table">Trạng thái</th>
+                        <th class="list-item-heading--table">Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each getPayment}}
+                        <tr>
+                            <td class="list-item-des">{{sum @index 1}}</td>
+                            <td class="list-item-des day_value">{{createdAt}}</td>
+                            <td class="list-item-des">
+                                <div class="price-wrap">
+                                    <h4>{{total}}</h4>
+                                    <h4 class=" number-total">.000 đ</h4>
+                                </div>
+                            </td>
+                            <td class="list-item-des"><div class='btn-status'>{{order_Status}}</div></td>
+                            <td class="list-item-des"><a class="btn-detail" href="/orders/{{_id}}/detail">Nhấn để xem</a></td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    

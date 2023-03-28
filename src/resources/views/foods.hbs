@@ -1,0 +1,148 @@
+<div class='container-left'>
+    {{> sidebar }}
+</div>
+<div class='container-right'>
+    <div class='form-wrap'>
+        {{! Header }}
+        <div class='form-header'>
+            <a class='form-header-title' href='/foods'>
+                Danh Sách Món Ăn ({{quantity}})
+            </a>
+
+            <form action='/foods/search' method='GET'>
+                <div class='search'>
+                    <label for=''>
+                        <input class='search-input' type='text' name="text" placeholder='Tìm kiếm theo tên món' />
+                        <span class='search-delete'><ion-icon name='close-circle-outline'></ion-icon></span>
+                        <div class='line'></div>
+                        <button type="submit" class='search-btn'>
+                            <ion-icon class='search-icon' name='search-outline'></ion-icon>
+                        </button>
+                    </label>
+                    <div class='filter-category form-selected'>
+                        <div class='dropdown-center'>
+                            <button class='btn btn-warning dropdown-toggle' data-bs-toggle='dropdown'>
+                                Lọc theo loại
+                            </button>
+                            <ul class='dropdown-menu'>
+                                <li><a class='dropdown-item' href='/foods/food'>Món ăn</a></li>
+                                <li><a class='dropdown-item' href='/foods/drink'>Món nước</a></li>
+                                <li><a class='dropdown-item' href='/foods/sidefood'>Ăn kèm</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <form action='/foods/handle-form-actions' method='POST'>
+            {{! Form Option }}
+            <div class='form-action'>
+                <div class='form-selected'>
+                    <h4 class='notify-checked'></h4>
+                    <select hidden required class='form-select-option' name='action'>
+                        <option value=''>Chọn thao tác</option>
+                        <option value='softDelete'>Xóa</option>
+                    </select>
+                    <button type='submit' hidden class='btn btn-danger btn-action-check'>Thực hiện</button>
+                </div>
+                <div class='form-btn'>
+                    <a href='/foods/create'>
+                        <div class='btn btn-add-order'>
+                            <span class='btn-icon-add'><ion-icon name='add-outline'></ion-icon></span>
+                            Thêm món
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            {{! List Foods }}
+            <div class='form-detail'>
+                <div class='form-heading'>
+                    <ul class='row list-heading'>
+                        <li class='col-lg-1 list-item-heading'></li>
+                        <li class='col-lg-1 list-item-heading'>STT</li>
+                        <li class='col-lg-1 list-item-heading'>Ảnh</li>
+                        <li class='col-lg-4 list-item-heading'>Tên món</li>
+                        <li class='col-lg-1 list-item-heading'>Loại</li>
+                        <li class='col-lg-2 list-item-heading btn-sort'>Đơn giá
+                            <span class='nav-icon-sort'><ion-icon name='swap-vertical-outline'></ion-icon></span>
+                        </li>
+                        <li class='col-lg-2 list-item-heading'>Tác vụ</li>
+                    </ul>
+                </div>
+
+                <div class='form-des__wrap'>
+                    {{#each foods}}
+                        <div class='form-des'>
+                            <ul class='row list-des'>
+                                <li class='col-lg-1 list-item-des'><input
+                                        class='order-check'
+                                        type='checkbox'
+                                        name='food'
+                                        value='{{_id}}'
+                                    /></li>
+                                <li class='col-lg-1 list-item-des'>{{sum @index 1}}</li>
+                                <li class='col-lg-1 list-item-des'>
+                                    <img class='product-img' src={{img}} alt={{name}} />
+                                </li>
+                                <li class='col-lg-4 list-item-des'>{{name}}</li>
+                                <li class='col-lg-1 list-item-des item__type-food'>{{type}}</li>
+                                <li class='col-lg-2 list-item-des item-total'>{{price}}.000 đ</li>
+                                <li class='col-lg-2 list-item-des'>
+                                    <div class='btn-wrap'>
+                                        <a
+                                            href='#'
+                                            data-bs-toggle='modal'
+                                            data-bs-target='#delete-course-modal'
+                                            data-id='{{_id}}'
+                                        >
+                                            <span class='btn-delete'><ion-icon name='close-outline'></ion-icon></span>
+                                        </a>
+                                        <a href='/foods/{{_id}}/edit'>
+                                            <span class='btn-delete btn-edit'><ion-icon
+                                                name='create-outline'
+                                            ></ion-icon></span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {{else}}
+                        <tr>
+                            <div class="notify"> Chưa có sản phẩm nào. <a href="/foods/create">Nhấn để thêm</a></div>
+                        </tr>
+                    {{/each}}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class='trash'>
+        <a class='food-trash' href='/foods/trash'>
+            <span class='icon-trash'><ion-icon name='trash'></ion-icon></span>
+            <span class='icon-trash__number'>{{deletedCount}}</span>
+        </a>
+    </div>
+</div>
+
+<!-- Modal Confirm Delete -->
+<div class='modal fade' id='delete-course-modal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='exampleModalLabel'>Xóa sản phẩm</h5>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                Bạn có chắc muốn xóa sản phẩm này ?
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-outline' data-bs-dismiss='modal'>Hủy</button>
+                <button id='btn-delete-food' type='button' class='btn btn-danger'>Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name='delete-food-form' method='POST'></form>
+

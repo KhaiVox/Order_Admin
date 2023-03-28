@@ -1,0 +1,45 @@
+<div class='container-left'>
+    {{> sidebar }}
+</div>
+<div class='container-right'>
+    <div class='create edit-food'>
+        <div class="create-left">
+            <div class='create-item'>
+                <img class="food-img" src={{food.img}} alt="">
+            </div>
+        </div>
+        <div class="create-right">
+            <div class='create-header'>Chi tiết sản phẩm</div>
+            <form method='POST' action='/foods/{{food._id}}?_method=PUT'>
+                <div class='create-item'>
+                    <div class='create-title'>Tên sản phẩm :</div>
+                    <input type='text' class='create-input' name='name' id='name' value='{{food.name}}' />
+                </div>
+                <div class='create-item'>
+                    <div class='create-title'>Loại :</div>
+                    <select id='type' name='type' class='create-input' required>
+                        <option class="input-selected">{{food.type}}</option>
+                        <option class="food" name='food'>food</option>
+                        <option class="drink" name='drink'>drink</option>
+                        <option class="sidefood" name='sidefood'>sidefood</option>
+                    </select>
+                </div>
+                <div class='create-item'>
+                    <div class='create-title'>Đơn giá :</div>
+                    <input type='text' class='create-input' name='price' id='price' value='{{food.price}}' />
+                </div>
+                <div class='create-item'>
+                    <div class='create-title'>Hình :</div>
+                    <input type='text' class='create-input' name='img' id='img' value='{{food.img}}' />
+                </div>
+                
+                <div class='create-button'>
+                    <button class='btn btn-confirm'>Lưu thông tin</button>
+                </div>
+            </form>
+            <a href='/foods'>
+                <button class='btn btn-quit'>↩ Quay lại</button>
+            </a>
+        </div>
+    </div>
+</div>
