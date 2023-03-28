@@ -130,8 +130,23 @@
     }
     else if(buttonStatus.innerText == "Đang chuẩn bị") {
         buttonStatus.innerText = "Đã chuẩn bị xong"
+        valueOrderStatus.value = "Đang giao"
+    }
+    
+    // else if(buttonStatus.innerText == "Đang giao") {
+    //     buttonStatus.setAttribute("disabled", "disabled")
+    //     //valueOrderStatus.value = "Đang giao"
+    // }
+
+    // shipper thực hiện chức năng hoàn tất
+    else if(buttonStatus.innerText == "Đang giao") {
+        buttonStatus.innerText = "Đang giao"
+        valueOrderStatus.value = "Hoàn tất"
+    }
+    else if(buttonStatus.innerText == "Hoàn tất") {
         buttonStatus.setAttribute("disabled", "disabled")
     }
+
     else if(buttonStatus.innerText == "Đã hủy") {
         buttonStatus.setAttribute("disabled", "disabled")
     }
