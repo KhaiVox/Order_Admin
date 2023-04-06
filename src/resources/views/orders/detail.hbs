@@ -52,7 +52,10 @@
                             </div>
                             <div class='payment-item row'>
                                 <p class='col-4'> Địa chỉ </p>
-                                <strong class='col-8'>: {{getCustomer.address}}</strong>
+                                <strong class='col-8'>: {{getOrder.latitude}} {{getOrder.longitude}}</strong>
+                                <button class="btn-move-address">
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{getOrder.latitude}},{{getOrder.longitude}}" id='locInfo' target='#'><ion-icon name="navigate-outline"></ion-icon></a>
+                                </button>
                             </div>
                             <div class='payment-item row'>
                                 <p class='col-4'> Ngày đặt </p>
